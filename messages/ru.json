@@ -53,6 +53,7 @@
       "body": "Train tickets through us run between Tashkent, Samarkand, Bukhara, Khiva and Urgench."
     },
     "invalid": {
+      "missing": "Tell us where you are going, and when.",
       "unknownCity": "We do not sell train tickets from {city}. Trains through us run between Tashkent, Samarkand, Bukhara, Khiva and Urgench.",
       "sameCity": "Pick two different cities.",
       "badDate": "That date is not one we can read. Use the search form.",

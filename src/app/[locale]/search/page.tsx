@@ -1,7 +1,7 @@
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {ResultsHeader} from '@/components/results/results-header';
 import {ServiceRowItem} from '@/components/results/service-row';
-import {BackToSearch} from '@/components/ui/back-to-search';
+import {BackToSearch, InvalidSearch} from '@/components/ui/back-to-search';
 import {Notice} from '@/components/ui/notice';
 import {redirect} from '@/i18n/navigation';
 import type {Locale} from '@/i18n/routing';
@@ -26,18 +26,7 @@ export default async function ResultsPage({params, searchParams}: Props) {
   // Anything asked and wrong gets told what was wrong, on the page they landed on.
   if (parsed.status === 'missing') redirect({href: '/', locale});
 
-  if (parsed.status !== 'ok') {
-    const body =
-      parsed.status === 'unknown_city'
-        ? t('invalid.unknownCity', {city: parsed.city})
-        : parsed.status === 'same_city'
-          ? t('invalid.sameCity')
-          : parsed.status === 'bad_date'
-            ? t('invalid.badDate')
-            : t('invalid.pastDate');
-
-    return <BackToSearch heading={t('invalid.heading')} body={body} />;
-  }
+  if (parsed.status !== 'ok') return <InvalidSearch result={parsed} />;
 
   const {from, to, date} = parsed.query;
   const search = await searchServices(from, to, date);

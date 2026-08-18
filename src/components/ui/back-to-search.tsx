@@ -1,5 +1,6 @@
 import {getTranslations} from 'next-intl/server';
 import {Link} from '@/i18n/navigation';
+import type {SearchParamsResult} from '@/lib/search-params';
 import {Notice} from './notice';
 
 /**
@@ -23,4 +24,29 @@ export async function BackToSearch({heading, body}: {heading: string; body: stri
       </p>
     </Notice>
   );
+}
+
+type Invalid = Exclude<SearchParamsResult, {status: 'ok'}>;
+
+/**
+ * One sentence per way a search URL can be wrong, said the same way everywhere.
+ * Pages send an empty search back to the form rather than rendering `missing`,
+ * but the sentence exists so that forgetting to cannot leave a tourist reading
+ * an error about a date they never gave.
+ */
+export async function InvalidSearch({result}: {result: Invalid}) {
+  const t = await getTranslations('results.invalid');
+
+  const body =
+    result.status === 'missing'
+      ? t('missing')
+      : result.status === 'unknown_city'
+        ? t('unknownCity', {city: result.city})
+        : result.status === 'same_city'
+          ? t('sameCity')
+          : result.status === 'bad_date'
+            ? t('badDate')
+            : t('pastDate');
+
+  return <BackToSearch heading={t('heading')} body={body} />;
 }
