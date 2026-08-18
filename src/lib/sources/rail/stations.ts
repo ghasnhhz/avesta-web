@@ -30,7 +30,8 @@ export class UnknownStationError extends Error {
   }
 }
 
-export function requireStationCode(city: string): string {
-  if (!isRailCity(city)) throw new UnknownStationError(city);
-  return STATIONS[city];
+/** Narrows a free-text city to one we hold a code for, or throws. */
+export function assertRailCity(name: string): RailCity {
+  if (!isRailCity(name)) throw new UnknownStationError(name);
+  return name;
 }
