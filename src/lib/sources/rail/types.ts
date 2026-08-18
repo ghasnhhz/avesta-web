@@ -1,7 +1,7 @@
+import type {UnavailableReason} from '../types';
 import type {RailCity} from './stations';
 
-/** Why a service cannot be booked. Sold out is data, not an absence. */
-export type UnavailableReason = 'sold_out' | 'price_unreliable';
+export type {UnavailableReason};
 
 export type BerthCounts = {
   up: number;
