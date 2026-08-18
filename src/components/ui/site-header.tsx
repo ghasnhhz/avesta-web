@@ -1,3 +1,4 @@
+import {Suspense} from 'react';
 import {useTranslations} from 'next-intl';
 import {Link} from '@/i18n/navigation';
 import {LocaleSwitcher} from './locale-switcher';
@@ -14,7 +15,12 @@ export function SiteHeader() {
         >
           {t('title')}
         </Link>
-        <LocaleSwitcher />
+        {/* The switcher reads the query string to carry it across locales, which
+            opts every page that renders this header out of prerendering unless
+            it sits behind a boundary. The fallback holds the same height. */}
+        <Suspense fallback={<div className="min-h-11" />}>
+          <LocaleSwitcher />
+        </Suspense>
       </div>
     </header>
   );
