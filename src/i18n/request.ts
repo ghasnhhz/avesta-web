@@ -18,7 +18,9 @@ export default getRequestConfig(async ({requestLocale}) => {
     formats: {
       dateTime: {
         journey: {weekday: 'short', day: 'numeric', month: 'short'},
-        clock: {hour: '2-digit', minute: '2-digit'}
+        // 24-hour, matching the departure times the railway publishes. A 12-hour
+        // clock here would put two time systems on one page.
+        clock: {hour: '2-digit', minute: '2-digit', hour12: false}
       }
     }
   };
