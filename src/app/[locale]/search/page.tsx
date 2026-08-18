@@ -1,8 +1,9 @@
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {ResultsHeader} from '@/components/results/results-header';
 import {ServiceRowItem} from '@/components/results/service-row';
+import {BackToSearch} from '@/components/ui/back-to-search';
 import {Notice} from '@/components/ui/notice';
-import {Link, redirect} from '@/i18n/navigation';
+import {redirect} from '@/i18n/navigation';
 import type {Locale} from '@/i18n/routing';
 import {todayInTashkent} from '@/lib/dates';
 import {buildResults} from '@/lib/results-view';
@@ -13,24 +14,6 @@ type Props = {
   params: Promise<{locale: Locale}>;
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
-
-async function BackToSearch({heading, body}: {heading: string; body: string}) {
-  const t = await getTranslations('results.invalid');
-
-  return (
-    <Notice heading={heading}>
-      <p>{body}</p>
-      <p className="mt-4">
-        <Link
-          href="/"
-          className="text-accent underline underline-offset-4 transition-opacity duration-200 hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
-        >
-          {t('back')}
-        </Link>
-      </p>
-    </Notice>
-  );
-}
 
 export default async function ResultsPage({params, searchParams}: Props) {
   const {locale} = await params;
