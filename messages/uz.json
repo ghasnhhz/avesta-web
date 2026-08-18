@@ -3,6 +3,9 @@
     "title": "Avesta",
     "description": "Bus and train tickets in Uzbekistan, bought for you by a person."
   },
+  "a11y": {
+    "skipToContent": "Skip to content"
+  },
   "locale": {
     "label": "Language",
     "en": "English",
@@ -11,6 +14,11 @@
   },
   "home": {
     "heading": "Bus and train tickets in Uzbekistan",
-    "intro": "Tell us the journey. A person here buys the ticket and sends you the PDF."
+    "intro": "Tell us the journey. A person here buys the ticket and sends you the PDF.",
+    "refund": "We buy your ticket after your money arrives, not before. If the berth is gone by then we offer you the next departure, or refund everything including our fee."
+  },
+  "footer": {
+    "fee": "Our fee is 10%, always shown as its own line.",
+    "cards": "We never ask for card numbers and never will."
   }
 }

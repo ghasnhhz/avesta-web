@@ -13,9 +13,12 @@ export default function HomePage({
   const t = useTranslations('home');
 
   return (
-    <main>
-      <h1>{t('heading')}</h1>
-      <p>{t('intro')}</p>
-    </main>
+    <div className="max-w-prose">
+      <h1 className="font-serif text-3xl leading-tight tracking-tight sm:text-4xl">
+        {t('heading')}
+      </h1>
+      <p className="mt-6 text-lg text-muted">{t('intro')}</p>
+      <p className="mt-4 text-muted">{t('refund')}</p>
+    </div>
   );
 }
