@@ -33,3 +33,6 @@ yarn-debug.log*
 .vercel
 next-env.d.ts
 *.tsbuildinfo
+
+# prisma client is generated, never committed
+src/generated/
