@@ -17,6 +17,70 @@
     "intro": "Tell us the journey. A person here buys the ticket and sends you the PDF.",
     "refund": "We buy your ticket after your money arrives, not before. If the berth is gone by then we offer you the next departure, or refund everything including our fee."
   },
+  "search": {
+    "heading": "Where are you going?",
+    "from": "From",
+    "to": "To",
+    "date": "Date",
+    "chooseCity": "Choose a city",
+    "submit": "Show trains",
+    "cities": {
+      "Tashkent": "Tashkent",
+      "Samarkand": "Samarkand",
+      "Bukhara": "Bukhara",
+      "Khiva": "Khiva",
+      "Urgench": "Urgench"
+    }
+  },
+  "results": {
+    "journey": "{from} to {to}",
+    "count": "{count, plural, =0 {No trains} one {# train} other {# trains}}",
+    "soldOutCount": "{count, plural, one {# sold out} other {# sold out}}",
+    "change": "Change",
+    "freshness": "Prices checked at {time} Tashkent time",
+    "stale": "The railway is not answering. These are the last prices we have, from {time} Tashkent time.",
+    "empty": {
+      "heading": "No trains on this date",
+      "body": "The railway lists nothing from {from} to {to} on this date. Try the day before or after. Sales also open some weeks ahead, so a date far in the future may not be on sale yet."
+    },
+    "failed": {
+      "heading": "The railway did not answer",
+      "body": "This is their booking system, not the trains. Trains may well be running. Try again in a minute.",
+      "retry": "Try again"
+    },
+    "unserved": {
+      "heading": "We do not sell this journey",
+      "body": "Train tickets through us run between Tashkent, Samarkand, Bukhara, Khiva and Urgench."
+    },
+    "invalid": {
+      "unknownCity": "We do not sell train tickets from {city}. Trains through us run between Tashkent, Samarkand, Bukhara, Khiva and Urgench.",
+      "sameCity": "Pick two different cities.",
+      "badDate": "That date is not one we can read. Use the search form.",
+      "pastDate": "That date has passed. Pick today or a later date.",
+      "heading": "That search needs a change",
+      "back": "Back to search"
+    },
+    "row": {
+      "departs": "Departs",
+      "arrives": "Arrives",
+      "nextDayMark": "+{days}",
+      "nextDay": "{days, plural, one {arrives the next day} other {arrives # days later}}",
+      "onTheWay": "{time} on the way, as the railway states it",
+      "seats": "{count, plural, one {# seat left} other {# seats left}}",
+      "seatsUnknown": "Seats left not published",
+      "soldOut": "Sold out on the railway",
+      "unpriced": {
+        "heading": "No price for this train",
+        "body": "The railway lists it, but the fare it sent back did not look right, so we are not quoting one."
+      }
+    },
+    "price": {
+      "fare": "from {sum, number} sum",
+      "fareOne": "{sum, number} sum",
+      "fee": "+ {percent}% our fee",
+      "total": "{sum, number} sum in total"
+    }
+  },
   "footer": {
     "fee": "Our fee is 10%, always shown as its own line.",
     "cards": "We never ask for card numbers and never will."

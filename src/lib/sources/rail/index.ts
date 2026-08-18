@@ -6,6 +6,7 @@ import {assertRailCity, stationCode} from './stations';
 import type {Train} from './types';
 
 export {RAIL_CITIES, UnknownStationError, isRailCity} from './stations';
+export type {RailCity} from './stations';
 export {RailUpstreamError} from './client';
 export type {BerthCounts, Train, TrainClass, UnavailableReason} from './types';
 

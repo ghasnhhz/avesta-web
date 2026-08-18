@@ -10,6 +10,18 @@ export default getRequestConfig(async ({requestLocale}) => {
 
   return {
     locale,
-    messages: (await import(`../../messages/${locale}.json`)).default
+    messages: (await import(`../../messages/${locale}.json`)).default,
+    // Every clock time on this site is Tashkent local — the railway publishes no
+    // offset and we print its times as they arrive. Pinning the zone here stops a
+    // Vercel box in UTC rendering a 14:32 price check as 09:32.
+    timeZone: 'Asia/Tashkent',
+    formats: {
+      dateTime: {
+        journey: {weekday: 'short', day: 'numeric', month: 'short'},
+        // 24-hour, matching the departure times the railway publishes. A 12-hour
+        // clock here would put two time systems on one page.
+        clock: {hour: '2-digit', minute: '2-digit', hour12: false}
+      }
+    }
   };
 });

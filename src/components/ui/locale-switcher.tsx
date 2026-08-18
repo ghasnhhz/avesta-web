@@ -1,6 +1,6 @@
 'use client';
 
-import {useParams} from 'next/navigation';
+import {useParams, useSearchParams} from 'next/navigation';
 import {useTransition} from 'react';
 import {useTranslations} from 'next-intl';
 import {usePathname, useRouter} from '@/i18n/navigation';
@@ -10,9 +10,9 @@ export function LocaleSwitcher() {
   const t = useTranslations('locale');
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const params = useParams();
   const [isPending, startTransition] = useTransition();
-
   const current = params.locale as string;
 
   // A native select keeps the 44px touch target, the keyboard behaviour and the
@@ -26,7 +26,10 @@ export function LocaleSwitcher() {
         onChange={(event) => {
           const next = event.target.value;
           startTransition(() => {
-            router.replace(pathname, {locale: next});
+            // usePathname drops the query. On a results page that is the whole
+            // journey, so it is carried across by hand.
+            const query = searchParams.toString();
+            router.replace(`${pathname}${query ? `?${query}` : ''}`, {locale: next});
           });
         }}
         className="min-h-11 cursor-pointer rounded-md border border-border bg-background px-3 py-2 text-foreground transition-colors duration-200 hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-60"
