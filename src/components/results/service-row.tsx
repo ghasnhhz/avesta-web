@@ -1,43 +1,11 @@
 import {useTranslations} from 'next-intl';
+import {ServiceTimes} from '@/components/ui/service-times';
 import {FEE_PERCENT} from '@/lib/pricing';
 import type {ServiceRow} from '@/lib/results-view';
 import {FareLines} from './fare-lines';
 
-function Times({row, muted}: {row: ServiceRow; muted: boolean}) {
-  const t = useTranslations('results.row');
-  const {service, arrivalDayOffset} = row;
-
-  return (
-    <p className={`flex items-baseline gap-2 text-xl ${muted ? 'text-muted' : ''}`}>
-      <span className="sr-only">{t('departs')} </span>
-      <time dateTime={`${service.departure.date}T${service.departure.time}`}>
-        {service.departure.time}
-      </time>
-      <span aria-hidden="true" className="text-muted">
-        →
-      </span>
-      <span className="sr-only">{t('arrives')} </span>
-      {service.arrival ? (
-        <time dateTime={`${service.arrival.date}T${service.arrival.time}`}>
-          {service.arrival.time}
-        </time>
-      ) : (
-        <span aria-hidden="true">—</span>
-      )}
-      {arrivalDayOffset !== null && arrivalDayOffset > 0 ? (
-        <>
-          <span aria-hidden="true" className="text-sm text-muted">
-            {t('nextDayMark', {days: arrivalDayOffset})}
-          </span>
-          <span className="sr-only">{t('nextDay', {days: arrivalDayOffset})}</span>
-        </>
-      ) : null}
-    </p>
-  );
-}
-
 function Identity({row}: {row: ServiceRow}) {
-  const t = useTranslations('results.row');
+  const t = useTranslations('times');
   const {service} = row;
   if (service.mode !== 'train') return null;
 
@@ -81,7 +49,12 @@ export function ServiceRowItem({row}: {row: ServiceRow}) {
     <li className="border-b border-border py-5 last:border-b-0">
       <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
         <div className="min-w-0">
-          <Times row={row} muted={soldOut} />
+          <ServiceTimes
+            departure={row.service.departure}
+            arrival={row.service.arrival}
+            dayOffset={row.arrivalDayOffset}
+            muted={soldOut}
+          />
           <Identity row={row} />
         </div>
 

@@ -61,25 +61,71 @@
       "back": "Back to search"
     },
     "row": {
-      "departs": "Departs",
-      "arrives": "Arrives",
-      "nextDayMark": "+{days}",
-      "nextDay": "{days, plural, one {arrives the next day} other {arrives # days later}}",
-      "onTheWay": "{time} on the way, as the railway states it",
       "seats": "{count, plural, one {# seat left} other {# seats left}}",
       "seatsUnknown": "Seats left not published",
       "soldOut": "Sold out on the railway",
       "unpriced": {
         "heading": "No price for this train",
         "body": "The railway lists it, but the fare it sent back did not look right, so we are not quoting one."
-      }
+      },
+      "choose": "Choose class"
     }
+  },
+  "times": {
+    "departs": "Departs",
+    "arrives": "Arrives",
+    "nextDayMark": "+{days}",
+    "nextDay": "{days, plural, one {arrives the next day} other {arrives # days later}}",
+    "onTheWay": "{time} on the way, as the railway states it"
   },
   "price": {
     "fare": "from {sum, number} sum",
     "fareOne": "{sum, number} sum",
     "fee": "+ {percent}% our fee",
     "total": "{sum, number} sum in total"
+  },
+  "booking": {
+    "journey": "{from} to {to}",
+    "back": "Back to the other trains",
+    "classes": {
+      "legend": "Class",
+      "seats": "{count, plural, one {# seat left} other {# seats left}}",
+      "seatsUnknown": "Seats left not published"
+    },
+    "accommodation": {
+      "platskart": "Open berth carriage",
+      "kupe": "4-berth compartment",
+      "sv": "2-berth compartment",
+      "seated": "Seated",
+      "general": "Unreserved seat"
+    },
+    "berth": {
+      "legend": "Berth preference",
+      "lower": "Lower",
+      "upper": "Upper",
+      "any": "No preference",
+      "free": "{count, plural, =0 {none free right now} other {# free right now}}",
+      "reality": "Nobody can reserve a specific berth on Uzbek railways in advance — not us, not the railway's own site until the moment of purchase. We ask for the berth you prefer and tell you which one you got."
+    },
+    "continue": "Continue",
+    "nothingHeld": "Choosing here holds nothing. A person buys the ticket after your money arrives, and you see the full price before you pay.",
+    "soldOut": {
+      "heading": "This train is sold out",
+      "body": "The railway has nothing left on it now. It may have gone in the minutes since you saw the list."
+    },
+    "unpriced": {
+      "heading": "No price for this train",
+      "body": "The railway lists it, but the fare it sent back did not look right, so we are not quoting one."
+    },
+    "notFound": {
+      "heading": "We cannot find that train",
+      "body": "The railway is not listing it on this journey and date. The link may be an old one, or the timetable may have changed."
+    }
+  },
+  "passengers": {
+    "heading": "Passenger details come next",
+    "body": "We are still building this step. Nothing you chose has been booked, and no money has been asked for.",
+    "back": "Back to search"
   },
   "footer": {
     "fee": "Our fee is 10%, always shown as its own line.",
