@@ -8,7 +8,7 @@ import type {Train} from './types';
 export {RAIL_CITIES, UnknownStationError, isRailCity} from './stations';
 export type {RailCity} from './stations';
 export {RailUpstreamError} from './client';
-export type {BerthCounts, Train, TrainClass, UnavailableReason} from './types';
+export type {Accommodation, BerthCounts, Train, TrainClass, UnavailableReason} from './types';
 
 /**
  * Cities in, never station codes — the code table is this module's business.
