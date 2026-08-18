@@ -17,6 +17,21 @@
     "intro": "Tell us the journey. A person here buys the ticket and sends you the PDF.",
     "refund": "We buy your ticket after your money arrives, not before. If the berth is gone by then we offer you the next departure, or refund everything including our fee."
   },
+  "search": {
+    "heading": "Where are you going?",
+    "from": "From",
+    "to": "To",
+    "date": "Date",
+    "chooseCity": "Choose a city",
+    "submit": "Show trains",
+    "cities": {
+      "Tashkent": "Tashkent",
+      "Samarkand": "Samarkand",
+      "Bukhara": "Bukhara",
+      "Khiva": "Khiva",
+      "Urgench": "Urgench"
+    }
+  },
   "footer": {
     "fee": "Our fee is 10%, always shown as its own line.",
     "cards": "We never ask for card numbers and never will."
