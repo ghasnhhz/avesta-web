@@ -1,0 +1,16 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Temporary. Exists only so feature 0 produces a real migration and proves the
+// Neon connection works end to end. Feature 6 drops this table and writes the
+// order schema fresh — do not grow the real model out of it.
+model ConnectivityCheck {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+}
