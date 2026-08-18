@@ -14,8 +14,13 @@
   },
   "home": {
     "heading": "Bus and train tickets in Uzbekistan",
-    "intro": "Tell us the journey. A person here buys the ticket and sends you the PDF.",
-    "refund": "We buy your ticket after your money arrives, not before. If the berth is gone by then we offer you the next departure, or refund everything including our fee."
+    "intro": "Tell us the journey. A person here buys the ticket and sends you the PDF."
+  },
+  "promise": {
+    "refund": "We buy your ticket after your money arrives, not before. If the berth is gone by then we offer you the next departure, or refund everything including our fee.",
+    "cards": "We never ask for card numbers and never will.",
+    "timing": "A person buys each ticket by hand. Normally within 4 hours, always within 12.",
+    "passport": "The railway prints the passport number on the ticket, and the conductor checks it against the passport on board. That is the only reason we ask for it."
   },
   "search": {
     "heading": "Where are you going?",
@@ -129,7 +134,6 @@
     "back": "Back to search"
   },
   "footer": {
-    "fee": "Our fee is 10%, always shown as its own line.",
-    "cards": "We never ask for card numbers and never will."
+    "fee": "Our fee is 10%, always shown as its own line."
   }
 }

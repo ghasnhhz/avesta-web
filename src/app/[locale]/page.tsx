@@ -19,6 +19,7 @@ export default async function HomePage({params, searchParams}: Props) {
   // date comes back to the journey they already chose rather than an empty form.
   const query = await searchParams;
   const t = await getTranslations('home');
+  const promise = await getTranslations('promise');
 
   return (
     <div>
@@ -36,7 +37,7 @@ export default async function HomePage({params, searchParams}: Props) {
         />
       </div>
 
-      <p className="mt-10 max-w-prose text-muted">{t('refund')}</p>
+      <p className="mt-10 max-w-prose text-muted">{promise('refund')}</p>
     </div>
   );
 }
