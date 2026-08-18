@@ -112,6 +112,36 @@ describe('berth preference', () => {
   });
 });
 
+describe('accommodation', () => {
+  it('names the accommodation from the car the class sits in', () => {
+    const train = fromTashkent().find((t) => t.number === '082Ф')!;
+
+    expect(train.classes.map((c) => [c.code, c.accommodation])).toEqual([
+      ['3П', 'platskart'],
+      ['2К', 'kupe'],
+      ['1Л', 'sv']
+    ]);
+  });
+
+  it('reads the Uzbek car type upstream returns under Accept-Language: en', () => {
+    // 751М comes back as "O'rindiqli" where the same request elsewhere says
+    // "Сидячий" — the localisation is inconsistent, not the accommodation.
+    const seated = fromUrgench()
+      .flatMap((t) => t.classes)
+      .filter((c) => c.code === '2Е');
+
+    expect(seated.length).toBeGreaterThan(0);
+    for (const cls of seated) expect(cls.accommodation).toBe('seated');
+  });
+
+  it('names nothing rather than guessing at a car type we have not seen', () => {
+    const unknown = structuredClone(urgench) as typeof urgench;
+    unknown.data.directions.forward.trains[0].cars[0].type = 'Спальный вагон люкс';
+
+    expect(parseTrains(unknown, 'Urgench', 'Tashkent')[0].classes[0].accommodation).toBeNull();
+  });
+});
+
 describe('upstream text', () => {
   it('keeps Cyrillic in numbers and class codes intact', () => {
     const codes = fromTashkent().flatMap((t) => t.classes.map((c) => c.code));

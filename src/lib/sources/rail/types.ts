@@ -10,9 +10,17 @@ export type BerthCounts = {
   lateralDn: number;
 };
 
+/**
+ * What the tourist actually sits or sleeps in. Derived from the car the tariff
+ * sits in, never from the class code — no code table is invented here.
+ */
+export type Accommodation = 'platskart' | 'kupe' | 'sv' | 'seated' | 'general';
+
 export type TrainClass = {
   /** classServiceType, e.g. "3П" — the code the railway prints on the ticket. */
   code: string;
+  /** Null when upstream sends a car type we have not seen. The code renders alone. */
+  accommodation: Accommodation | null;
   priceSum: number;
   /**
    * Null when upstream reports the count only on the car and the car carries
