@@ -1,4 +1,5 @@
 import {useTranslations} from 'next-intl';
+import {fieldStyle} from '@/components/ui/field';
 import {getPathname} from '@/i18n/navigation';
 import type {Locale} from '@/i18n/routing';
 import {todayInTashkent} from '@/lib/dates';
@@ -8,9 +9,6 @@ type Props = {
   locale: Locale;
   defaults?: {from?: string; to?: string; date?: string};
 };
-
-const field =
-  'min-h-11 w-full rounded-md border border-border bg-background px-3 py-2 text-foreground transition-colors duration-200 hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent';
 
 /**
  * A plain GET form: no client JS, and the query the results page reads is the
@@ -37,7 +35,7 @@ export function SearchForm({locale, defaults}: Props) {
               name={name}
               required
               defaultValue={defaults?.[name] ?? ''}
-              className={`${field} cursor-pointer`}
+              className={`${fieldStyle} cursor-pointer`}
             >
               <option value="" disabled>
                 {t('chooseCity')}
@@ -61,7 +59,7 @@ export function SearchForm({locale, defaults}: Props) {
           // Tashkent's today, not the server's — see todayInTashkent.
           min={todayInTashkent()}
           defaultValue={defaults?.date}
-          className={field}
+          className={fieldStyle}
         />
       </label>
 
