@@ -20,7 +20,7 @@ export function FareLines({quote, percent, from = false}: Props) {
   return (
     <div className="text-right">
       <p className="text-lg font-medium">
-        {t(from ? 'fare' : 'fareOne', {sum: quote.ticketSum})}
+        {t(from ? 'fare' : 'sum', {sum: quote.ticketSum})}
       </p>
       <p className="mt-0.5 text-sm text-muted">{t('fee', {percent})}</p>
       <p className="text-sm text-muted">{t('total', {sum: quote.totalSum})}</p>

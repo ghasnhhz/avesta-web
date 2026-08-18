@@ -32,7 +32,7 @@ function Fares({row}: {row: ServiceRow}) {
       {row.fares.map((fare, index) => (
         <li key={`${row.key}:${index}`} className="flex flex-wrap items-baseline gap-x-3">
           {fare.code ? <span className="font-medium">{fare.code}</span> : null}
-          <span>{price('fareOne', {sum: fare.quote.ticketSum})}</span>
+          <span>{price('sum', {sum: fare.quote.ticketSum})}</span>
           <span className="text-muted">
             {fare.freeSeats === null ? t('seatsUnknown') : t('seats', {count: fare.freeSeats})}
           </span>

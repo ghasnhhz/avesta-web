@@ -86,7 +86,7 @@
   },
   "price": {
     "fare": "from {sum, number} sum",
-    "fareOne": "{sum, number} sum",
+    "sum": "{sum, number} sum",
     "fee": "+ {percent}% our fee",
     "total": "{sum, number} sum in total"
   },
