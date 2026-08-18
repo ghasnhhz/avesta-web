@@ -17,18 +17,24 @@ function normaliseCode(value: string): string {
 
 // The class code is the stable key, but it names nothing a tourist understands.
 // The car's own type does — and it is the only field that says what the
-// accommodation is. It is unsafe as a key (localised inconsistently between
-// identical requests, homoglyph-contaminated), so this is a lookup with a null
-// fallback: an unrecognised type renders as no name at all, never as a guess.
+// accommodation is. It is unsafe as a key: under one Accept-Language it has come
+// back Russian, Uzbek and English on different days. So this is a lookup over
+// every spelling we have seen, with a null fallback — an unrecognised type
+// renders as no name at all, never as a guess.
 const ACCOMMODATION = new Map<string, Accommodation>(
   (
     [
       ['Плацкартный', 'platskart'],
+      ['Sleeper', 'platskart'],
       ['Купе', 'kupe'],
+      ['Coupe', 'kupe'],
       ['СВ', 'sv'],
+      ['SV', 'sv'],
       ['Сидячий', 'seated'],
       ["O'rindiqli", 'seated'],
-      ['Общий', 'general']
+      ['Sitting', 'seated'],
+      ['Общий', 'general'],
+      ['General', 'general']
     ] as const
   ).map(([type, accommodation]) => [accommodationKey(type), accommodation])
 );

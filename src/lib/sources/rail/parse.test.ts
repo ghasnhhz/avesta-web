@@ -134,6 +134,19 @@ describe('accommodation', () => {
     for (const cls of seated) expect(cls.accommodation).toBe('seated');
   });
 
+  it('reads the English car types upstream started returning', () => {
+    // Captured 2026-08-19: the same request that returned "Плацкартный" and
+    // "O'rindiqli" on other days answered "Sleeper", "Coupe", "SV", "Sitting"
+    // and "General". The accommodation did not change; the spelling did.
+    const english = structuredClone(samarkand) as typeof samarkand;
+    const cars = english.data.directions.forward.trains[7].cars;
+    [cars[0].type, cars[1].type, cars[2].type] = ['Sleeper', 'Coupe', 'SV'];
+
+    const train = parseTrains(english, 'Tashkent', 'Samarkand').find((t) => t.number === '082Ф')!;
+
+    expect(train.classes.map((c) => c.accommodation)).toEqual(['platskart', 'kupe', 'sv']);
+  });
+
   it('names nothing rather than guessing at a car type we have not seen', () => {
     const unknown = structuredClone(urgench) as typeof urgench;
     unknown.data.directions.forward.trains[0].cars[0].type = 'Спальный вагон люкс';
