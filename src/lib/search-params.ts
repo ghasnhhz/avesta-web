@@ -16,18 +16,18 @@ export type SearchParamsResult =
   | {status: 'bad_date'; date: string}
   | {status: 'past_date'; date: string};
 
-type RawParams = Record<string, string | string[] | undefined>;
+export type RawParams = Record<string, string | string[] | undefined>;
 
 // A repeated parameter arrives as an array. There is no sensible way to pick one,
 // so the search counts as unasked rather than half-guessed.
-function one(value: string | string[] | undefined): string | undefined {
+export function singleParam(value: string | string[] | undefined): string | undefined {
   return typeof value === 'string' && value.length > 0 ? value : undefined;
 }
 
 export function readSearchParams(params: RawParams, today: string): SearchParamsResult {
-  const from = one(params.from);
-  const to = one(params.to);
-  const date = one(params.date);
+  const from = singleParam(params.from);
+  const to = singleParam(params.to);
+  const date = singleParam(params.date);
 
   if (!from || !to || !date) return {status: 'missing'};
   if (!isRailCity(from)) return {status: 'unknown_city', city: from};

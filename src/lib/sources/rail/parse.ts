@@ -1,7 +1,7 @@
 import {sanePriceSum} from '@/lib/validate';
 import {parseStamp} from './dates';
 import {type RailCity, stationCode} from './stations';
-import type {BerthCounts, Train, TrainClass} from './types';
+import type {Accommodation, BerthCounts, Train, TrainClass} from './types';
 
 // The same response returns "СК" (Cyrillic С К) and "CK" (Latin C K) for the
 // same train type. Keying off the raw string silently splits one type into two,
@@ -15,9 +15,49 @@ function normaliseCode(value: string): string {
   return [...value].map((char) => CONFUSABLES[char] ?? char).join('');
 }
 
+// The class code is the stable key, but it names nothing a tourist understands.
+// The car's own type does — and it is the only field that says what the
+// accommodation is. It is unsafe as a key: under one Accept-Language it has come
+// back Russian, Uzbek and English on different days. So this is a lookup over
+// every spelling we have seen, with a null fallback — an unrecognised type
+// renders as no name at all, never as a guess.
+const ACCOMMODATION = new Map<string, Accommodation>(
+  (
+    [
+      ['Плацкартный', 'platskart'],
+      ['Sleeper', 'platskart'],
+      ['Купе', 'kupe'],
+      ['Coupe', 'kupe'],
+      ['СВ', 'sv'],
+      ['SV', 'sv'],
+      ['Сидячий', 'seated'],
+      ["O'rindiqli", 'seated'],
+      ['Sitting', 'seated'],
+      ['Общий', 'general'],
+      ['General', 'general']
+    ] as const
+  ).map(([type, accommodation]) => [accommodationKey(type), accommodation])
+);
+
+function accommodationKey(type: string): string {
+  // Uzbek types arrive with an ASCII apostrophe today; the three typographic
+  // ones are the same letter and must not split the entry.
+  return normaliseCode(type.toUpperCase()).replace(/[ʻʼ‘’]/g, "'");
+}
+
+function accommodationOf(type: unknown): Accommodation | null {
+  if (typeof type !== 'string') return null;
+  return ACCOMMODATION.get(accommodationKey(type)) ?? null;
+}
+
 type RawTariff = {classServiceType?: unknown; freeSeats?: unknown; tariff?: unknown};
 type RawSeatDetail = Partial<Record<keyof BerthCounts | 'undef' | 'freeComp', number>>;
-type RawCar = {freeSeats?: unknown; tariffs?: RawTariff[]; seatDetail?: RawSeatDetail};
+type RawCar = {
+  type?: unknown;
+  freeSeats?: unknown;
+  tariffs?: RawTariff[];
+  seatDetail?: RawSeatDetail;
+};
 type RawTrain = {
   number?: unknown;
   type?: unknown;
@@ -48,6 +88,7 @@ function berthCounts(seatDetail: RawSeatDetail | undefined): BerthCounts | undef
 function carClasses(car: RawCar, trainNumber: string): TrainClass[] {
   const tariffs = car.tariffs ?? [];
   const soleClass = tariffs.length === 1;
+  const accommodation = accommodationOf(car.type);
 
   return tariffs.flatMap((tariff): TrainClass[] => {
     const code = typeof tariff.classServiceType === 'string' ? tariff.classServiceType : '';
@@ -64,7 +105,7 @@ function carClasses(car: RawCar, trainNumber: string): TrainClass[] {
 
     const berths = soleClass ? berthCounts(car.seatDetail) : undefined;
 
-    return [{code, priceSum, freeSeats, ...(berths ? {berths} : {})}];
+    return [{code, accommodation, priceSum, freeSeats, ...(berths ? {berths} : {})}];
   });
 }
 
