@@ -14,8 +14,12 @@ export function journeyDate(isoDate: string): Date {
   return new Date(`${isoDate}T12:00:00Z`);
 }
 
-/** Shape and reality: 2026-02-31 has the right shape and is not a day. */
-export function isJourneyDate(value: string): boolean {
+/**
+ * Shape and reality: 2026-02-31 has the right shape and is not a day. Named for
+ * the calendar rather than the journey — it also vets dates of birth, which are
+ * the same question asked about the past.
+ */
+export function isCalendarDate(value: string): boolean {
   if (!ISO_DATE.test(value)) return false;
 
   const [year, month, day] = value.split('-').map(Number);
