@@ -32,7 +32,7 @@ describe('searchTrains', () => {
 
     const bookable = trains[0];
     expect(bookable.classes).toEqual([
-      {code: '2Е', priceSum: 750000, freeSeats: 27}
+      {code: '2Е', accommodation: 'seated', priceSum: 750000, freeSeats: 27}
     ]);
     expect(bookable.origin).toBe('Urgench');
     expect(bookable.destination).toBe('Tashkent');
