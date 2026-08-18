@@ -73,13 +73,13 @@
         "heading": "No price for this train",
         "body": "The railway lists it, but the fare it sent back did not look right, so we are not quoting one."
       }
-    },
-    "price": {
-      "fare": "from {sum, number} sum",
-      "fareOne": "{sum, number} sum",
-      "fee": "+ {percent}% our fee",
-      "total": "{sum, number} sum in total"
     }
+  },
+  "price": {
+    "fare": "from {sum, number} sum",
+    "fareOne": "{sum, number} sum",
+    "fee": "+ {percent}% our fee",
+    "total": "{sum, number} sum in total"
   },
   "footer": {
     "fee": "Our fee is 10%, always shown as its own line.",

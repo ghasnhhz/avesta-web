@@ -1,4 +1,5 @@
 import {useTranslations} from 'next-intl';
+import {FEE_PERCENT} from '@/lib/pricing';
 import type {ServiceRow} from '@/lib/results-view';
 import {FareLines} from './fare-lines';
 
@@ -55,7 +56,7 @@ function Identity({row}: {row: ServiceRow}) {
 
 function Fares({row}: {row: ServiceRow}) {
   const t = useTranslations('results.row');
-  const price = useTranslations('results.price');
+  const price = useTranslations('price');
 
   return (
     <ul className="mt-4 flex flex-col gap-1 text-sm">
@@ -84,8 +85,12 @@ export function ServiceRowItem({row}: {row: ServiceRow}) {
           <Identity row={row} />
         </div>
 
-        {row.kind === 'bookable' ? (
-          <FareLines row={row} />
+        {row.cheapest ? (
+          <FareLines
+            quote={row.cheapest}
+            percent={FEE_PERCENT}
+            from={row.fares.length > 1}
+          />
         ) : soldOut ? (
           // Listed, timed, unpriced and unbookable — never hidden, and never
           // given a price from anywhere else.
