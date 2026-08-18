@@ -17,7 +17,17 @@ vi.mock('./bus', async (importOriginal) => ({
 const {searchTrains} = await import('./rail');
 const {searchBuses} = await import('./bus');
 
-afterEach(() => vi.restoreAllMocks());
+// clearAllMocks as well as restore: searchTrains/searchBuses are module mocks,
+// and their call history would otherwise carry from one test into the next.
+afterEach(() => {
+  vi.clearAllMocks();
+  vi.restoreAllMocks();
+});
+
+// This file is about the merge, so both sources are asked for explicitly. The
+// default skips the bus half — see the access tests at the bottom.
+const merged = (from: string, to: string, date: string) =>
+  searchServices(from, to, date, {includeBus: true});
 
 // Both sources are stubbed at their own contract: this file is about the merge,
 // and each parser is tested against real captured responses elsewhere.
@@ -78,7 +88,7 @@ describe('merging', () => {
     railReturns([train('056Ж', '14:20')]);
     busReturns([trip(61720, '09:00'), trip(61721, '21:30')]);
 
-    const {value} = await searchServices('Urgench', 'Tashkent', '2026-08-26');
+    const {value} = await merged('Urgench', 'Tashkent', '2026-08-26');
 
     expect(value.services.map((s) => [s.mode, s.departure.time])).toEqual([
       ['bus', '09:00'],
@@ -91,7 +101,7 @@ describe('merging', () => {
     railReturns([train('126Ф', '13:00', false)]);
     busReturns([trip(61720, '09:00'), trip(61721, '21:30')]);
 
-    const {value} = await searchServices('Urgench', 'Tashkent', '2026-08-26');
+    const {value} = await merged('Urgench', 'Tashkent', '2026-08-26');
     const soldOut = value.services.findIndex((s) => !s.available);
 
     expect(soldOut).toBe(1);
@@ -101,7 +111,7 @@ describe('merging', () => {
     railReturns([train('056Ж', '14:20')], {stale: true});
     busReturns([trip(61720, '09:00')]);
 
-    const result = await searchServices('Urgench', 'Tashkent', '2026-08-26');
+    const result = await merged('Urgench', 'Tashkent', '2026-08-26');
 
     expect(result.stale).toBe(true);
     expect(result.fetchedAt).toBe(1000);
@@ -113,7 +123,7 @@ describe('one source, one route', () => {
     vi.mocked(searchTrains).mockRejectedValue(new UnknownStationError('Hazarasp'));
     busReturns([trip(61720, '09:00')]);
 
-    const {value} = await searchServices('Hazarasp', 'Tashkent', '2026-08-26');
+    const {value} = await merged('Hazarasp', 'Tashkent', '2026-08-26');
 
     expect(value.services).toHaveLength(1);
     expect(value.sources).toEqual({rail: 'unknown_city', bus: 'ok'});
@@ -123,7 +133,7 @@ describe('one source, one route', () => {
     railReturns([train('056Ж', '14:20')]);
     vi.mocked(searchBuses).mockRejectedValue(new UnknownLocationError('Nukus'));
 
-    const {value} = await searchServices('Urgench', 'Nukus', '2026-08-26');
+    const {value} = await merged('Urgench', 'Nukus', '2026-08-26');
 
     expect(value.services).toHaveLength(1);
     expect(value.sources).toEqual({rail: 'ok', bus: 'unknown_city'});
@@ -136,7 +146,7 @@ describe('a source that fails', () => {
     vi.mocked(searchTrains).mockRejectedValue(new Error('502'));
     busReturns([trip(61720, '09:00')]);
 
-    const {value} = await searchServices('Urgench', 'Tashkent', '2026-08-26');
+    const {value} = await merged('Urgench', 'Tashkent', '2026-08-26');
 
     expect(value.services).toHaveLength(1);
     // "the railway did not answer" must not read as "no trains run".
@@ -148,9 +158,31 @@ describe('a source that fails', () => {
     railReturns([]);
     busReturns([], true);
 
-    const {value} = await searchServices('Urgench', 'Tashkent', '2026-08-26');
+    const {value} = await merged('Urgench', 'Tashkent', '2026-08-26');
 
     expect(value.services).toEqual([]);
     expect(value.sources).toEqual({rail: 'ok', bus: 'incomplete'});
+  });
+});
+
+describe('bus access', () => {
+  it('does not call the bus API while access is refused', async () => {
+    railReturns([train('056Ж', '14:20')]);
+
+    await searchServices('Urgench', 'Tashkent', '2026-08-26');
+
+    expect(searchBuses).not.toHaveBeenCalled();
+  });
+
+  it('reports no bus access as its own status, not a failure', async () => {
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {});
+    railReturns([train('056Ж', '14:20')]);
+
+    const {value} = await searchServices('Urgench', 'Tashkent', '2026-08-26');
+
+    expect(value.sources).toEqual({rail: 'ok', bus: 'no_access'});
+    expect(value.services).toHaveLength(1);
+    // A source we chose not to ask is not an incident. Nothing to log.
+    expect(error).not.toHaveBeenCalled();
   });
 });
