@@ -22,12 +22,14 @@ export class BusUpstreamError extends Error {
 
 function headers(): HeadersInit {
   const token = process.env.BUS_API_TOKEN;
-  if (!token) throw new BusUpstreamError('BUS_API_TOKEN is not set');
 
   return {
     Accept: 'application/json',
-    // A static app key, not a session token — same value across days and hosts.
-    Authorization: `Bearer ${token}`,
+    // Verified 2026-08-18: the key is not required. The same request returns an
+    // identical 200 with a valid key, with no Authorization header, and with a
+    // corrupted one. We still send it when we have it rather than pretend to be
+    // an anonymous caller, but its absence is not a failure.
+    ...(token ? {Authorization: `Bearer ${token}`} : {}),
     'Content-Type': 'application/json',
     'User-Agent': userAgent()
   };

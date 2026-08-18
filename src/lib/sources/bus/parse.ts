@@ -42,6 +42,7 @@ function parseTrip(raw: RawTrip, origin: BusCity, destination: BusCity): Trip | 
   // Equal timestamps mean the arrival is unknown, not instant. Nothing computes
   // a duration from these anywhere, so nothing can render "0 minutes".
   const arrival = raw.arrive_at === raw.departure_at ? null : parseStamp(raw.arrive_at);
+  const boarding = parseStamp(raw.trip_time);
 
   const seats = num(raw.seats);
   const soldSeats = num(raw.sold_seats);
@@ -73,7 +74,7 @@ function parseTrip(raw: RawTrip, origin: BusCity, destination: BusCity): Trip | 
     toId: num(raw.to_id),
     departure: {date: departure.date, time: departure.time},
     arrival: arrival && {date: arrival.date, time: arrival.time},
-    boarding: parseStamp(raw.trip_time),
+    boarding: boarding && {date: boarding.date, time: boarding.time},
     priceSum,
     seats,
     soldSeats,
@@ -124,12 +125,14 @@ function seatNumbers(value: unknown): Set<number> {
  * seat *numbers*, unlike `sold_seats` on a trip record, which is a count.
  */
 export function parseSeatMap(payload: unknown, tripId: number): BusSeatMap {
-  const raw = payload as {
-    all_seats?: RawSeat[];
-    men_seats?: unknown;
-    women_seats?: unknown;
-    trip_data?: {sold_seats?: unknown; price?: unknown};
-  };
+  const raw = (payload as {
+    data?: {
+      all_seats?: RawSeat[];
+      men_seats?: unknown;
+      women_seats?: unknown;
+      trip_data?: {sold_seats?: unknown; price?: unknown};
+    };
+  })?.data;
 
   const sold = seatNumbers(raw?.trip_data?.sold_seats);
   const men = seatNumbers(raw?.men_seats);
