@@ -199,7 +199,10 @@
       "heading": "Check this before you continue",
       "journey": "Journey",
       "class": "Class",
-      "berthRequest": "We will ask for a {berth} berth and tell you which one you got.",
+      "berthRequest": {
+        "lower": "We will ask for a lower berth and tell you which one you got.",
+        "upper": "We will ask for an upper berth and tell you which one you got."
+      },
       "berthAny": "You did not ask for a particular berth, so we will take what the railway gives.",
       "party": "Passengers",
       "passenger": "{surname}, {firstName}",

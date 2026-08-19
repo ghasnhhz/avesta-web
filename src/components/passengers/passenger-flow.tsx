@@ -4,17 +4,22 @@ import {useEffect, useRef, useState} from 'react';
 import {useTranslations} from 'next-intl';
 import {ErrorSummary} from '@/components/passengers/error-summary';
 import {PassengerFields, cardStyle} from '@/components/passengers/passenger-fields';
+import {Review} from '@/components/passengers/review';
 import {Field, fieldErrorStyle, fieldStyle} from '@/components/ui/field';
+import type {BerthPreference} from '@/lib/choice-params';
 import type {CountryOption} from '@/lib/countries';
 import {clearDraft, readDraft, writeDraft} from '@/lib/passenger-draft';
 import {
   MAX_PASSENGERS,
+  type Party,
   type PartyDraft,
   type PartyErrors,
   type PassengerDraft,
   emptyPassenger,
   readParty
 } from '@/lib/passengers';
+import type {PartyQuote} from '@/lib/pricing';
+import type {Accommodation} from '@/lib/sources/rail';
 
 type Props = {
   countries: CountryOption[];
@@ -22,6 +27,12 @@ type Props = {
   /** Tashkent's today, from the server: a render either side of midnight in the
       client would otherwise disagree with the server about the date ceiling. */
   today: string;
+  /** Priced on the server for every party size, so the client never multiplies money. */
+  quotes: PartyQuote[];
+  feePercent: number;
+  classCode: string;
+  accommodation: Accommodation | null;
+  berth: BerthPreference | null;
 };
 
 const EMAIL_ID = 'contact-email';
@@ -40,13 +51,23 @@ const quietButtonStyle =
  * lib/passengers, so what is left here is wiring: which step is showing, what
  * has been typed, and what the last continue found wrong.
  */
-export function PassengerFlow({countries, commonCount, today}: Props) {
+export function PassengerFlow({
+  countries,
+  commonCount,
+  today,
+  quotes,
+  feePercent,
+  classCode,
+  accommodation,
+  berth
+}: Props) {
   const t = useTranslations('passengers');
 
-  const [step, setStep] = useState<'details' | 'unbuilt'>('details');
+  const [step, setStep] = useState<'details' | 'review' | 'unbuilt'>('details');
   const [passengers, setPassengers] = useState<PassengerDraft[]>([emptyPassenger()]);
   const [email, setEmail] = useState('');
   const [errors, setErrors] = useState<PartyErrors | null>(null);
+  const [party, setParty] = useState<Party | null>(null);
 
   const [restored, setRestored] = useState(false);
   const heading = useRef<HTMLHeadingElement>(null);
@@ -119,7 +140,26 @@ export function PassengerFlow({countries, commonCount, today}: Props) {
     }
 
     setErrors(null);
-    setStep('unbuilt');
+    setParty(result.party);
+    setStep('review');
+  }
+
+  if (step === 'review' && party) {
+    return (
+      <Review
+        party={party}
+        // Priced per party size on the server. The index is the party minus one.
+        quote={quotes[party.passengers.length - 1]}
+        feePercent={feePercent}
+        classCode={classCode}
+        accommodation={accommodation}
+        berth={berth}
+        countries={countries}
+        headingRef={heading}
+        onBack={() => setStep('details')}
+        onConfirm={() => setStep('unbuilt')}
+      />
+    );
   }
 
   if (step === 'unbuilt') {
