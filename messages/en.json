@@ -158,6 +158,10 @@
     "passportHint": "Letters and digits only, exactly as printed. No spaces.",
     "country": "Issuing country",
     "chooseCountry": "Choose a country",
+    "countryGroups": {
+      "common": "Common",
+      "all": "All countries"
+    },
     "contact": {
       "legend": "Where the ticket goes",
       "email": "Email",
