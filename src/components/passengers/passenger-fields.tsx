@@ -80,11 +80,7 @@ export function PassengerFields({
       </legend>
 
       <div className="grid gap-4 sm:grid-cols-2">
-        <Field
-          id={id('surname')}
-          label={t('names.surname')}
-          error={message(errors.surname, 'surname')}
-        >
+        <Field id={id('surname')} label={t('names.surname')} error={message(errors.surname)}>
           {({id: inputId, describedBy, invalid}) => (
             <input
               id={inputId}
@@ -104,7 +100,7 @@ export function PassengerFields({
         <Field
           id={id('firstName')}
           label={t('names.firstName')}
-          error={message(errors.firstName, 'firstName')}
+          error={message(errors.firstName)}
         >
           {({id: inputId, describedBy, invalid}) => (
             <input
@@ -122,11 +118,7 @@ export function PassengerFields({
           )}
         </Field>
 
-        <Field
-          id={id('birthDate')}
-          label={t('birthDate')}
-          error={message(errors.birthDate, 'birthDate')}
-        >
+        <Field id={id('birthDate')} label={t('birthDate')} error={message(errors.birthDate)}>
           {({id: inputId, describedBy, invalid}) => (
             <input
               id={inputId}
@@ -146,7 +138,7 @@ export function PassengerFields({
         <GenderChoice
           id={id('gender')}
           value={draft.gender}
-          error={message(errors.gender, 'gender')}
+          error={message(errors.gender)}
           onChange={(gender) => onChange({gender})}
         />
 
@@ -154,7 +146,7 @@ export function PassengerFields({
           id={id('passportNumber')}
           label={t('passportNumber')}
           hint={t('passportHint')}
-          error={message(errors.passportNumber, 'passportNumber')}
+          error={message(errors.passportNumber)}
         >
           {({id: inputId, describedBy, invalid}) => (
             <input
@@ -175,7 +167,7 @@ export function PassengerFields({
           )}
         </Field>
 
-        <Field id={id('country')} label={t('country')} error={message(errors.country, 'country')}>
+        <Field id={id('country')} label={t('country')} error={message(errors.country)}>
           {({id: inputId, describedBy, invalid}) => (
             <select
               id={inputId}
@@ -265,6 +257,7 @@ function GenderChoice({
 function useErrorMessage() {
   const t = useTranslations('passengers');
 
-  return (error: FieldError | undefined, field: keyof PassengerDraft) =>
-    error ? t(`errors.${error}`, {field: t(FIELD_LABEL[field])}) : undefined;
+  // Beside the field its own label already names it. The summary, read away
+  // from the fields, adds the name itself.
+  return (error: FieldError | undefined) => (error ? t(`errors.${error}`) : undefined);
 }

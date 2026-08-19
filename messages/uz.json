@@ -169,9 +169,10 @@
       "noPhone": "We do not ask for a phone number. Foreign numbers do not reliably reach Uzbek systems, and this is the one thing that has to arrive."
     },
     "errorSummary": "Check these before continuing",
-    "errorAt": "Passenger {number}: {message}",
+    "errorAt": "Passenger {number}, {field}: {message}",
+    "errorField": "{field}: {message}",
     "errors": {
-      "required": "{field} is needed.",
+      "required": "This is needed.",
       "latin_only": "Use only the unaccented Latin letters printed in the machine-readable lines. Ü is UE there and É is E.",
       "too_long": "That is longer than the railway's form accepts. Use the passport spelling.",
       "passport_format": "A passport number is 5 to 15 letters and digits. Copy it exactly as printed.",

@@ -63,11 +63,12 @@ function listErrors(
 
       items.push({
         href: `#${fieldId(index, field)}`,
-        // Numbered, because four passengers produce four identical sentences
-        // otherwise and none of them says which card to scroll to.
+        // Numbered and named. Four passengers otherwise produce four identical
+        // sentences, none of which says which card or which field to look at.
         message: t('errorAt', {
           number: index + 1,
-          message: t(`errors.${error}`, {field: t(FIELD_LABEL[field])})
+          field: t(FIELD_LABEL[field]),
+          message: t(`errors.${error}`)
         })
       });
     }
@@ -76,7 +77,10 @@ function listErrors(
   if (errors.email) {
     items.push({
       href: `#${emailId}`,
-      message: t(`errors.${errors.email}`, {field: t('contact.email')})
+      message: t('errorField', {
+        field: t('contact.email'),
+        message: t(`errors.${errors.email}`)
+      })
     });
   }
 

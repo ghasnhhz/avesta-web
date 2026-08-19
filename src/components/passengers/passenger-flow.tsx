@@ -227,7 +227,7 @@ export function PassengerFlow({
           id={EMAIL_ID}
           label={t('contact.email')}
           hint={t('contact.emailHint')}
-          error={errors?.email ? t(`errors.${errors.email}`, {field: t('contact.email')}) : undefined}
+          error={errors?.email ? t(`errors.${errors.email}`) : undefined}
         >
           {({id, describedBy, invalid}) => (
             <input
