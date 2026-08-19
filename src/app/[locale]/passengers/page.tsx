@@ -114,7 +114,11 @@ export default async function PassengersPage({params, searchParams}: Props) {
 
       {view.state === 'ready' ? (
         <PassengerFlow
-          countries={countryOptions(locale)}
+          // English, not `locale`, until uz.json and ru.json are really
+          // translated. They are byte-identical English today, so Russian
+          // country names beside English labels read as a broken page rather
+          // than as a multilingual one.
+          countries={countryOptions('en')}
           commonCount={COMMON_PASSPORT_COUNTRY_CODES.length}
           today={today}
           // Every party size priced on the server: lib/pricing is server-only,
