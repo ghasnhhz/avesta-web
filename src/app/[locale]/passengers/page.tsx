@@ -17,8 +17,8 @@ export default async function PassengersPage({params}: Props) {
   const t = await getTranslations('passengers');
 
   return (
-    <Notice heading={t('heading')}>
-      <p>{t('body')}</p>
+    <Notice heading={t('unbuilt.heading')}>
+      <p>{t('unbuilt.body')}</p>
       <p className="mt-4">
         <Link
           href="/"
