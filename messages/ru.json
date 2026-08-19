@@ -14,8 +14,13 @@
   },
   "home": {
     "heading": "Bus and train tickets in Uzbekistan",
-    "intro": "Tell us the journey. A person here buys the ticket and sends you the PDF.",
-    "refund": "We buy your ticket after your money arrives, not before. If the berth is gone by then we offer you the next departure, or refund everything including our fee."
+    "intro": "Tell us the journey. A person here buys the ticket and sends you the PDF."
+  },
+  "promise": {
+    "refund": "We buy your ticket after your money arrives, not before. If the berth is gone by then we offer you the next departure, or refund everything including our fee.",
+    "cards": "We never ask for card numbers and never will.",
+    "timing": "A person buys each ticket by hand. Normally within 4 hours, always within 12.",
+    "passport": "The railway prints the passport number on the ticket, and the conductor checks it against the passport on board. That is the only reason we ask for it."
   },
   "search": {
     "heading": "Where are you going?",
@@ -81,9 +86,12 @@
   },
   "price": {
     "fare": "from {sum, number} sum",
-    "fareOne": "{sum, number} sum",
+    "sum": "{sum, number} sum",
     "fee": "+ {percent}% our fee",
-    "total": "{sum, number} sum in total"
+    "total": "{sum, number} sum in total",
+    "tickets": "{count, plural, one {Ticket} other {# tickets}}",
+    "feeLabel": "Our fee, {percent}%",
+    "totalLabel": "Total"
   },
   "booking": {
     "journey": "{from} to {to}",
@@ -124,12 +132,94 @@
     }
   },
   "passengers": {
-    "heading": "Passenger details come next",
-    "body": "We are still building this step. Nothing you chose has been booked, and no money has been asked for.",
-    "back": "Back to search"
+    "heading": "Who is travelling?",
+    "intro": "The railway prints these details on the ticket, so they have to match the passport exactly. A person here retypes them into the railway's own form.",
+    "passenger": "Passenger {number}",
+    "add": "Add a passenger",
+    "remove": "Remove",
+    "removeLabel": "Remove passenger {number}",
+    "full": "Four passengers is the most one order can hold. Make a second order for a larger group.",
+    "clear": "Clear these details",
+    "continue": "Continue",
+    "back": "Back to the classes",
+    "names": {
+      "surname": "Surname",
+      "firstName": "First name",
+      "hint": "Copy the names from the two machine-readable lines at the bottom of the passport page. Those are always unaccented Latin letters — MÜLLER is written MUELLER there, and that is the spelling the railway needs."
+    },
+    "birthDate": "Date of birth",
+    "gender": {
+      "legend": "Gender",
+      "male": "Male",
+      "female": "Female",
+      "hint": "The railway's form offers these two and the ticket has to match the passport."
+    },
+    "passportNumber": "Passport number",
+    "passportHint": "Letters and digits only, exactly as printed. No spaces.",
+    "country": "Issuing country",
+    "chooseCountry": "Choose a country",
+    "countryGroups": {
+      "common": "Common",
+      "all": "All countries"
+    },
+    "contact": {
+      "legend": "Where the ticket goes",
+      "email": "Email",
+      "emailHint": "The PDF ticket and every update about this order go to this address.",
+      "noPhone": "We do not ask for a phone number. Foreign numbers do not reliably reach Uzbek systems, and this is the one thing that has to arrive."
+    },
+    "errorSummary": "Check these before continuing",
+    "errorAt": "Passenger {number}, {field}: {message}",
+    "errorField": "{field}: {message}",
+    "errors": {
+      "required": "This is needed.",
+      "latin_only": "Use only the unaccented Latin letters printed in the machine-readable lines. Ü is UE there and É is E.",
+      "too_long": "That is longer than the railway's form accepts. Use the passport spelling.",
+      "passport_format": "A passport number is 5 to 15 letters and digits. Copy it exactly as printed.",
+      "duplicate_passport": "Two passengers cannot travel on one passport number. Check which document belongs to whom.",
+      "birth_date_unreadable": "That is not a date we can read.",
+      "birth_date_future": "A date of birth cannot be in the future.",
+      "birth_date_too_old": "Check the year. That is more than 120 years ago.",
+      "unknown_country": "Choose the issuing country from the list.",
+      "email_unreadable": "That address does not look complete. The ticket goes there, so it has to be right."
+    },
+    "noClass": {
+      "heading": "Choose a class first",
+      "body": "This link does not say which class you want. The classes on this train, and what each costs, are on the page you came from."
+    },
+    "classGone": {
+      "heading": "That class is no longer listed",
+      "body": "The railway is not listing {code} on this train any more. It may have sold out in the last few minutes. The other classes are on the page you came from."
+    },
+    "priceChanged": {
+      "heading": "The price changed",
+      "body": "{code} was {was, number} sum when you chose it. The railway is asking {now, number} sum now. Nothing has been booked and nothing has been charged.",
+      "continue": "Continue at {now, number} sum"
+    },
+    "review": {
+      "heading": "Check this before you continue",
+      "journey": "Journey",
+      "class": "Class",
+      "berthRequest": {
+        "lower": "We will ask for a lower berth and tell you which one you got.",
+        "upper": "We will ask for an upper berth and tell you which one you got."
+      },
+      "berthAny": "You did not ask for a particular berth, so we will take what the railway gives.",
+      "party": "Passengers",
+      "passenger": "{surname}, {firstName}",
+      "passengerDetail": "Born {birthDate} · {gender} · Passport {passport} · {country}",
+      "contact": "Ticket goes to",
+      "price": "Price",
+      "adultFare": "Everyone here is quoted the adult fare. If the railway charges less for a child, we write to you and refund the difference.",
+      "change": "Change details",
+      "confirm": "Continue"
+    },
+    "unbuilt": {
+      "heading": "This is as far as we have built",
+      "body": "Payment is the next step and it is not finished yet. Nothing has been booked, no money has been asked for, and the passenger details have not left this page."
+    }
   },
   "footer": {
-    "fee": "Our fee is 10%, always shown as its own line.",
-    "cards": "We never ask for card numbers and never will."
+    "fee": "Our fee is 10%, always shown as its own line."
   }
 }

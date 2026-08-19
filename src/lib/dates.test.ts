@@ -1,5 +1,5 @@
 import {afterEach, describe, expect, it, vi} from 'vitest';
-import {dayOffset, isJourneyDate, journeyDate, todayInTashkent} from './dates';
+import {dayOffset, isCalendarDate, journeyDate, todayInTashkent} from './dates';
 
 afterEach(() => vi.useRealTimers());
 
@@ -14,18 +14,18 @@ describe('journeyDate', () => {
   });
 });
 
-describe('isJourneyDate', () => {
+describe('isCalendarDate', () => {
   it('accepts a real day', () => {
-    expect(isJourneyDate('2026-08-26')).toBe(true);
+    expect(isCalendarDate('2026-08-26')).toBe(true);
   });
 
   it('rejects a date with the right shape that is not a day', () => {
-    expect(isJourneyDate('2026-02-31')).toBe(false);
-    expect(isJourneyDate('2026-13-01')).toBe(false);
+    expect(isCalendarDate('2026-02-31')).toBe(false);
+    expect(isCalendarDate('2026-13-01')).toBe(false);
   });
 
   it('rejects the format the railway returns, which is not the format we search in', () => {
-    expect(isJourneyDate('26.08.2026')).toBe(false);
+    expect(isCalendarDate('26.08.2026')).toBe(false);
   });
 });
 

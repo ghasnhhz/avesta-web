@@ -18,6 +18,8 @@ export default getRequestConfig(async ({requestLocale}) => {
     formats: {
       dateTime: {
         journey: {weekday: 'short', day: 'numeric', month: 'short'},
+        // A date of birth needs its year, which the journey format leaves out.
+        birthDate: {day: 'numeric', month: 'short', year: 'numeric'},
         // 24-hour, matching the departure times the railway publishes. A 12-hour
         // clock here would put two time systems on one page.
         clock: {hour: '2-digit', minute: '2-digit', hour12: false}

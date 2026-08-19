@@ -11,6 +11,9 @@
   --color-border: #e4e1dc;
   --color-accent: #0f5156;
   --color-on-accent: #ffffff;
+  /* Only ever a wrong field. Nothing upstream failing, nothing sold out — those
+     already have a calmer treatment and must not start shouting in red. */
+  --color-danger: #b3261e;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,6 +25,7 @@
     --color-border: #2e2e2b;
     --color-accent: #5ebfc4;
     --color-on-accent: #10201f;
+    --color-danger: #f2b8b5;
   }
 }
 
@@ -33,6 +37,7 @@
   --color-border: var(--color-border);
   --color-accent: var(--color-accent);
   --color-on-accent: var(--color-on-accent);
+  --color-danger: var(--color-danger);
 
   --font-sans: var(--font-inter), system-ui, sans-serif;
   --font-serif: var(--font-source-serif), Georgia, serif;

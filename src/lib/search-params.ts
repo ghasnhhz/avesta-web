@@ -1,4 +1,4 @@
-import {isJourneyDate} from '@/lib/dates';
+import {isCalendarDate} from '@/lib/dates';
 import {type RailCity, isRailCity} from '@/lib/sources/rail';
 
 export type SearchQuery = {from: RailCity; to: RailCity; date: string};
@@ -33,7 +33,7 @@ export function readSearchParams(params: RawParams, today: string): SearchParams
   if (!isRailCity(from)) return {status: 'unknown_city', city: from};
   if (!isRailCity(to)) return {status: 'unknown_city', city: to};
   if (from === to) return {status: 'same_city', city: from};
-  if (!isJourneyDate(date)) return {status: 'bad_date', date};
+  if (!isCalendarDate(date)) return {status: 'bad_date', date};
   if (date < today) return {status: 'past_date', date};
 
   return {status: 'ok', query: {from, to, date}};
